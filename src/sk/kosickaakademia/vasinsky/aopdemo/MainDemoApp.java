@@ -2,6 +2,7 @@ package sk.kosickaakademia.vasinsky.aopdemo;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import sk.kosickaakademia.vasinsky.aopdemo.dao.AccountDAO;
+import sk.kosickaakademia.vasinsky.aopdemo.dao.MembershipDAO;
 
 public class MainDemoApp {
 
@@ -11,11 +12,15 @@ public class MainDemoApp {
                 new AnnotationConfigApplicationContext(DemoConfig.class);
 
         AccountDAO theAccountDAO = context.getBean("accountDAO", AccountDAO.class);
+        MembershipDAO theMembershipDAO = context.getBean("membershipDAO", MembershipDAO.class);
 
-        theAccountDAO.AddAccount();
+        Account myAccount = new Account();
+        theAccountDAO.AddAccount(myAccount, true);
+        theAccountDAO.doWork();
 
-        System.out.println("\n calling it again \n");
-        theAccountDAO.AddAccount();
+        theMembershipDAO.AddAccount();
+        theMembershipDAO.goToSleep();
+
 
         context.close();
 
